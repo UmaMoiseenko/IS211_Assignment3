@@ -31,8 +31,7 @@ def main():
             result = {'path':row[0], 'date':row[1], 'browser': row[2], 'status': row[3], 'size': row[4]}
             
             date = datetime.datetime.strptime(result['date'], dateFormat)
-            counter = times[date.hour] + 1
-            times[date.hour] = counter
+            times[date.hour] = times[date.hour] + 1
 
             hits += 1
             if re.search(r"\.(?:jpg|jpeg|gif|png)$", result['path'], re.I | re.M): 
@@ -52,14 +51,10 @@ def main():
                 msie += 1
 
         tempTimes = times
-
         # pop max keys and print 0 key vals in order
         for i in range(0, 24):
 	        id = (max(tempTimes.iteritems(), key=operator.itemgetter(1))[0])
-	        if id == 0:
-	        	print "Hour %02d has %s hits" % (id, tempTimes[id])
-	        else:
-	       	 	print "Hour %02d has %s hits" % (id, tempTimes[id])
+		print "Hour %02d has %s hits" % (id, tempTimes[id])
 	        tempTimes.pop(id)
 
         imageRequest = (imgHits/hits)*100
